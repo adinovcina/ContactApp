@@ -1,0 +1,83 @@
+﻿@using ContactApp.UI.Data
+@using ContactApp.Models
+
+@page "/contacts"
+@inject IContactService _contactService;
+@inject NavigationManager NavigationManager;
+
+<h3>Contacts</h3>
+
+<input type="text" class="form-control" value="@searchTerm" @onchange="FilterContacts" placeholder="Search by name, email, phone or address"></input>
+
+@if (Data == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!Data.Any())
+{
+    <p><em>No data</em></p>
+}
+else
+{
+    <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Favorite</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var contact in Data)
+            {
+                <tr>
+                    <td>@contact.Name</td>
+                    <td>@contact.Email</td>
+                    <td>@contact.PhoneNumber</td>
+                    <td>@contact.Address</td>
+                    <td><input type="checkbox" @bind="@contact.IsFavourite" disabled/></td>
+                    <td>
+                        <button class="btn btn-primary"
+                            @onclick="(() => ShowContact(contact.Id!.Value))">
+                            <i class="oi oi-pencil"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button class="btn btn-primary" @onclick="(() => CreateNewContact())">Create new contact</button>
+}
+
+@code {
+    private IEnumerable<Contact>? Data = null;
+
+    string searchTerm = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Data = await _contactService.GetAllContacts(null);
+    }
+
+    void ShowContact(Guid id)
+    {
+        NavigationManager.NavigateTo($"contact/{id}");
+    }
+
+    void CreateNewContact()
+    {
+        NavigationManager.NavigateTo($"contact");
+    }
+
+    async Task FilterContacts(ChangeEventArgs args)
+    {
+        if (args.Value != null)
+        {
+            Data = await _contactService.GetAllContacts(args.Value.ToString());
+        }
+    }
+}

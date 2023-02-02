@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ContactApp.Api</name>
+    </assembly>
+    <members>
+        <member name="M:ContactApp.Api.Controllers.Contact.ContactController.GetAllContacts(ContactApp.Api.Controllers.Contact.Models.ContactSearchObject)">
+            <summary>
+            Gets all personal contacts
+            </summary>
+        </member>
+        <member name="M:ContactApp.Api.Controllers.Contact.ContactController.GetFavourites">
+            <summary>
+            Gets favourites
+            </summary>
+        </member>
+        <member name="M:ContactApp.Api.Controllers.Contact.ContactController.GetContactDetails(System.Guid)">
+            <summary>
+            Gets contact details
+            </summary>
+        </member>
+        <member name="M:ContactApp.Api.Controllers.Contact.ContactController.CreateContact(ContactApp.Api.Controllers.Contact.Models.ContactDto)">
+            <summary>
+            Creates new personal contact
+            </summary>
+            <param name="model"></param>
+            <remarks>
+            Sample request:
+            
+                POST
+                {
+                    "name": "Adin",
+                    "phone": "062-333-222",
+                    "email": "example@gmail.com",
+                    "address": "Mostar"
+                }
+            </remarks>
+        </member>
+        <member name="M:ContactApp.Api.Controllers.Contact.ContactController.EditContact(ContactApp.Api.Controllers.Contact.Models.ContactDto)">
+            <summary>
+            Edits existing personal contact
+            </summary>
+            <param name="model"></param>
+            <remarks>
+            Sample request:
+            
+                PUT
+                {
+                    "id": "FECAE289-65C3-4F55-41F5-08DB03D98EE7",
+                    "name": "Edit",
+                    "phone": "062-333-222",
+                    "email": "example@gmail.com",
+                    "address": "Mostar bb"
+                }
+            </remarks>
+        </member>
+        <member name="M:ContactApp.Api.Controllers.Contact.ContactController.DeleteContact(System.Guid)">
+            <summary>
+            Deletes existing personal contact
+            </summary>
+            <param name="contactId"></param>
+        </member>
+    </members>
+</doc>

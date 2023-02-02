@@ -1,0 +1,91 @@
+﻿@using ContactApp.UI.Data
+@using ContactApp.Models
+
+@page "/contact"
+@page "/contact/{id:guid}"
+
+@inject IContactService _contactService;
+@inject NavigationManager NavigationManager;
+
+
+@if (Id == null)
+{
+    <h3>Create new contact</h3>
+}
+else
+{
+    <h3>Edit contact <b>"@contact.Name"</b></h3>
+}
+
+<EditForm Model="contact" OnSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <div>
+        <label for="name">Name</label>
+        <InputText id="name" @bind-Value="contact.Name" class="form-control"></InputText>
+        <ValidationMessage For="@(() => contact.Name)" />
+    </div>
+    <div>
+        <label for="email">Email</label>
+        <InputText id="email" @bind-Value="contact.Email" class="form-control"></InputText>
+        <ValidationMessage For="@(() => contact.Email)" />
+    </div>
+    <div>
+        <label for="phone">Phone</label>
+        <InputText id="phone" @bind-Value="contact.PhoneNumber" class="form-control"></InputText>
+        <ValidationMessage For="@(() => contact.PhoneNumber)" />
+    </div>
+    <div>
+        <label for="address">Address</label>
+        <InputText id="address" @bind-Value="contact.Address" class="form-control"></InputText>
+    </div>
+    <div>
+        <label for="favourite">Favorite</label>
+        <InputCheckbox id="favourite" @bind-Value="contact.IsFavourite"></InputCheckbox>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">@btnText</button>
+    @if (Id != null)
+    {
+        <button type="button" class="btn btn-danger" @onclick="DeleteContact">Delete contact</button>
+    }
+</EditForm>
+
+@code {
+    [Parameter]
+    public Guid? Id { get; set; }
+
+    Contact contact = new Contact();
+
+    string btnText = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        btnText = Id == null ? "Save new contact" : "Update contact";
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id != null)
+        {
+            contact = await _contactService.GetContactDetails(Id.Value);
+        }
+    }
+
+    async Task HandleSubmit()
+    {
+        if (Id == null)
+        {
+            await _contactService.CreateContact(contact);
+        }
+        else
+        {
+            contact.Id = Id;
+            await _contactService.UpdateContact(contact);
+        }
+    }
+
+    async Task DeleteContact()
+    {
+        await _contactService.DeleteContact(Id.Value);
+    }
+}

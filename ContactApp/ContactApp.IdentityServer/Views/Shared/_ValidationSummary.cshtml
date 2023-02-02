@@ -1,0 +1,30 @@
+﻿@if (ViewContext.ModelState["InvalidCredentials"] != null)
+{
+    <div class="error-container">
+        <div class="error-content">
+            <div class="error-header">Error</div>
+            <div asp-validation-summary="All" class="error-text"></div>
+        </div>
+    </div>
+}
+<style>
+    .error-container {
+        display: flex;
+        border-radius: 8px;
+        max-width: 606px;
+        margin: auto;
+        margin-top: 2rem;
+        background-color: rgba(218, 54, 51, 0.2);
+    }
+
+    .error-content {
+        text-align: center;
+        margin: 16px 16px;
+    }
+
+    .error-header {
+        font-weight: 900;
+        font-size: 14px;
+        line-height: 20px;
+    }
+</style>
