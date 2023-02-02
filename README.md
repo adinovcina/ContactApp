@@ -7,7 +7,7 @@
    git clone https://github.com/adinovcina/ContactApp.git
    ```
 
-## 2. Change connection string in appsettings.json for:
+## 2. Change connection string in appsettings.json and appsettings.Development.json for:
 	-ContactApp.Api 
 	-ContactApp.IdentityServer
 
@@ -16,7 +16,7 @@
 	- ContactApp.IdentityServer
 	- ContactApp.UI
 	
-## 4. Double check ports for localhost in appsettings.json for all projects
+## 4. Double check ports for localhost in appsettings.json and appsettings.Development.json for all projects
 
 
 
