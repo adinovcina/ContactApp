@@ -66,8 +66,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.SeedData();
-
 app.Use((context, next) =>
 {
     context.Request.Scheme = "https";

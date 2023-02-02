@@ -26,7 +26,8 @@ namespace ContactApp.Services.Services
         {
             if (_memoryCache.TryGetValue($"{keyFavourites}{userId}", out IEnumerable<Contact> contacts))
             {
-                return contacts;
+                if (contacts.Any())
+                    return contacts;
             }
 
             var favourites = await _contactRepository.GetFavouritesAsync(userId);
